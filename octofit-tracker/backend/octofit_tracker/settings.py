@@ -1,3 +1,5 @@
+# Database routers
+DATABASE_ROUTERS = ['octofit_tracker.db_routers.OctofitRouter']
 """
 Django settings for octofit_tracker project.
 
@@ -25,7 +27,13 @@ SECRET_KEY = 'django-insecure-_m9&kv8h70*(x0b-gchm4=xua#2!q&7cvinhe%9^c!m@4*ac20
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+import os
+
+# Allow localhost and Codespace URL
+CODESPACE_NAME = os.environ.get('CODESPACE_NAME')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if CODESPACE_NAME:
+    ALLOWED_HOSTS.append(f'{CODESPACE_NAME}-8000.app.github.dev')
 
 
 # Application definition
@@ -80,12 +88,14 @@ WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'octofit_db': {
         'ENGINE': 'djongo',
         'NAME': 'octofit_db',
-        'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'localhost',
-            'port': 27017,
+            'host': 'mongodb://localhost:27017',
         }
     }
 }
