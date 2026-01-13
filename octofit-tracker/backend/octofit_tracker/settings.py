@@ -79,8 +79,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     },
     'octofit_db': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'octofit.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'octofit_db',
     }
 }
 
